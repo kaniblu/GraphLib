@@ -11,7 +11,7 @@ template <typename V> class graph
 private:
 	int _vertex_size;
 	int _edge_size;
-	std::unordered_set<V> vertices_set;
+	std::unordered_set<V> _vertices_set;
 
 public:
 	std::vector<V> vertices;
@@ -20,7 +20,7 @@ public:
 	
 	void add_vertex(const V &vertex)
 	{
-		if (vertices_set.find(vertex) == vertices_set.end()) {
+		if (_vertices_set.find(vertex) == _vertices_set.end()) {
 			vertices_set.emplace(vertex);
 			vertices.push_back(vertex);
 			++_vertex_size;

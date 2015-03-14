@@ -2,8 +2,15 @@ cmake_minimum_required(VERSION 2.6)
 project(GraphLib)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-set(SOURCE_FILES)
+set(HEADER_FILES include/)
+set(SOURCE_FILES src/)
 
-add_library(GraphLib ${SOURCE_FILES})
+include_directories(include/)
 
-INSTALL(FILES include/* DESTINATION include)
+add_library(GraphLib SHARED ${SOURCE_FILES})
+
+install(FILES include/* DESTINATION include)
+install(TARGETS GraphLib
+        ARCHIVE DESTINATION lib
+        LIBRARY DESTINATION lib
+        RUNTIME DESTINATION bin)
