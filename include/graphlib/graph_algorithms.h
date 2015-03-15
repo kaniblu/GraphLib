@@ -21,16 +21,17 @@ namespace graphlib
 
             for (auto it = graph.vertices.begin(); it != graph.vertices.end(); ++it) {
                 double sum = 0;
+                T v1 = *it;
 
-                auto it3 = graph.in_vertices.find(*it);
+                auto it3 = graph.in_vertices.find(v1);
                 if (it3 != graph.in_vertices.end()) {
                     double weight_sum = 0;
 
-                    for (auto it2 = graph.edge_weights[*it].begin(); it2 != graph.edge_weights[*it].end(); ++it2)
+                    for (auto it2 = graph.edge_weights.find(v1)->second.begin(); it2 != graph.edge_weights.find(v1)->second.end(); ++it2)
                         weight_sum += it2->second;
 
                     for (auto it2 = it3->second.begin(); it2 != it3->second.end(); ++it2)
-                        sum += out_ranks[*it2] * graph.edge_weights[*it][*it2] / weight_sum;
+                        sum += out_ranks[*it2] * graph.edge_weights.find(v1)->second.find(*it2)->second / weight_sum;
                 }
 
                 const double old_rank = out_ranks[*it];
