@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.6)
 project(GraphLib)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-set(HEADER_FILES include/graphlib/graph.h include/graphlib/graph_algorithm.h include/graphlib.h)
+set(HEADER_FILES include/graphlib/graph.h include/graphlib/graph_algorithms.h include/graphlib.h)
 set(SOURCE_FILES src/graph.cpp)
 
 include_directories(include/)
