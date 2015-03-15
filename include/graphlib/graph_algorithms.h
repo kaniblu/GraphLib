@@ -24,13 +24,18 @@ namespace graphlib
 
                 auto it3 = graph.in_vertices.find(*it);
                 if (it3 != graph.in_vertices.end()) {
+                    double weight_sum = 0;
+
+                    for (auto it2 = graph.edge_weights[*it].begin(); it2 != graph.edge_weights[*it].end(); ++it2)
+                        weight_sum += it2->second;
+
                     for (auto it2 = it3->second.begin(); it2 != it3->second.end(); ++it2)
-                        sum += out_ranks[*it2] / graph.out_vertices.find(*it2)->second.size();
+                        sum += out_ranks[*it2] * graph.edge_weights[*it][*it2] / weight_sum;
                 }
 
                 const double old_rank = out_ranks[*it];
                 out_ranks[*it] = sum * damping + (root == *it ? 1 : 0) * (1 - damping);
-                delta += abs(out_ranks[*it] - old_rank);
+                delta += fabs(out_ranks[*it] - old_rank);
             }
 
             ++count;

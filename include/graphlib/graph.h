@@ -11,12 +11,15 @@ namespace graphlib
     template<typename V> class graph
     {
     private:
+        static constexpr double DEFAULT_WEIGHT = 1.0;
+
         int _vertex_size;
         int _edge_size;
         std::unordered_set<V> _vertices_set;
 
     public:
         std::vector<V> vertices;
+        std::unordered_map<V, std::unordered_map<V, double>> edge_weights;
         std::unordered_map<V, std::set<V>> out_vertices;
         std::unordered_map<V, std::set<V>> in_vertices;
 
@@ -29,7 +32,7 @@ namespace graphlib
             }
         }
 
-        void add_edge(const V &from, const V &to)
+        void add_edge(const V &from, const V &to, double weight)
         {
             add_vertex(from);
             add_vertex(to);
@@ -47,12 +50,27 @@ namespace graphlib
 
             if (in_vertices[to].find(from) == in_vertices[to].end())
                 in_vertices[to].emplace(from);
+
+            if (edge_weights.find(to) == edge_weights.end())
+                edge_weights.emplace(to, std::unordered_map<V, double>());
+
+            edge_weights[to][from] = weight;
+        }
+
+        void add_edge(const V &from, const V &to)
+        {
+            add_edge(from, to, DEFAULT_WEIGHT);
+        }
+
+        void add_bidirectional_edge(const V &v1, const V &v2, double weight)
+        {
+            add_edge(v1, v2, weight);
+            add_edge(v2, v1, weight);
         }
 
         void add_bidirectional_edge(const V &v1, const V &v2)
         {
-            add_edge(from, to);
-            add_edge(to, from);
+            add_bidirectional_edge(v1, v2, DEFAULT_WEIGHT);
         }
 
         int vertex_size() const
