@@ -49,6 +49,12 @@ namespace graphlib
                 in_vertices[to].emplace(from);
         }
 
+        void add_bidirectional_edge(const V &v1, const V &v2)
+        {
+            add_edge(from, to);
+            add_edge(to, from);
+        }
+
         int vertex_size() const
         {
             return _vertex_size;
