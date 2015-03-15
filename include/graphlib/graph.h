@@ -21,7 +21,7 @@ public:
 	void add_vertex(const V &vertex)
 	{
 		if (_vertices_set.find(vertex) == _vertices_set.end()) {
-			vertices_set.emplace(vertex);
+			_vertices_set.emplace(vertex);
 			vertices.push_back(vertex);
 			++_vertex_size;
 		}
